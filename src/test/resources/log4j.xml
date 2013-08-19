@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE log4j:configuration SYSTEM "D:\projects\g-dao\trunk\src\test\resources\log4j.dtd" >
+<log4j:configuration>
+
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-6p[%-d{ISO8601}] %m (%F:%L) %n"/>
+        </layout>
+    </appender>
+
+    <!--spring loglari-->
+    <logger name="org.springframework">
+        <level value="info"/>
+    </logger>
+
+    <!--hibernate loglari-->
+    <logger name="org.hibernate">
+        <level value="info"/>
+    </logger>
+
+    <!--connector loglari-->
+    <logger name="com.mchange">
+        <level value="info"/>
+    </logger>
+
+    <root>
+        <priority value="info"></priority>
+        <appender-ref ref="stdout" />
+    </root>
+</log4j:configuration>
