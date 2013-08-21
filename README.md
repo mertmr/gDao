@@ -7,3 +7,7 @@ Every other generic dao implementations in the market are based on creating sql 
 Best feauture of this generic dao is the "SimpleDao" annotation. If you are content with the generic functions of gDao you don't have to create the dao class of the model. For more explanation and usages, see wiki.
 
 https://github.com/mertmr/gDao/wiki
+
+For issues:
+
+https://github.com/mertmr/gDao/issues
