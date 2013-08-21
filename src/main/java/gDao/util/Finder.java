@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 Mert Meral
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package gDao.util;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,10 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: mmeral
- * Date: 5/7/13
- * Time: 9:51 AM
+ * @author Mert Meral
+ * @since 0.0.2
+ * We can say search customizer in short. You can add filters and sorters. The relation logic is also build up here.
  */
 public class Finder {
     private int maxResult;
@@ -28,45 +42,46 @@ public class Finder {
         maxResult = 0;
     }
 
-    public void addFilterEqual(String column, Object object) {
-        controlRelationAndAddToList(criterionList, Restrictions.eq(trimColumn(column), object), column);
+    /**
+     * Search column by value. Similar to GDao function, findByColumn
+     * @param column Define the column name you want to search
+     * @param value Define the value you want to search for the column name
+     */
+    public void addFilterEqual(String column, Object value) {
+        controlRelationAndAddToList(criterionList, Restrictions.eq(trimColumn(column), value), column);
     }
 
-    public void addFilterLessThanOrEqual(String column, Object object) {
-        controlRelationAndAddToList(criterionList, Restrictions.le(trimColumn(column), object), column);
+    /**
+     * According to column, fetch the results equal or lower than the value
+     */
+    public void addFilterLessThanOrEqual(String column, Object value) {
+        controlRelationAndAddToList(criterionList, Restrictions.le(trimColumn(column), value), column);
     }
 
+    /**
+     * Fetch the results ascended sorted
+     */
     public void addSortAsc(String column) {
         controlRelationAndAddToList(orderList, Order.asc(trimColumn(column)), column);
     }
 
-    private String trimColumn(String column) {
-        if (column.contains(".")) {
-            String[] tables = column.split("\\.");
-            if (tables.length > 2)
-                column = tables[tables.length - 2] + "." +
-                        tables[tables.length - 1]; //son ikiyi don
-        }
-        return column;
-    }
-
+    /**
+     * Fetch the results descended sorted
+     */
     public void addSortDesc(String column) {
         controlRelationAndAddToList(orderList, Order.desc(column), column);
     }
 
+    /**
+     * Set the maximum number of records that will be fetched
+     */
     public void setMaxResult(int maxResult) {
         this.maxResult = maxResult;
     }
 
-    private void controlRelationAndAddToList(List list, Object expression, String column) {
-        if (column.contains(".")) {
-            String[] tables = column.split("\\.");
-//            tables = (String[]) ArrayUtils.remove(tables, tables.length - 1);
-            relationList.add(new Filter(column, tables));
-        }
-        list.add(expression);
-    }
-
+    /**
+     * Used by gDao framework. Prepare filter, sort and relation lists before searching with hibernate
+     */
     public void prepareCriteria(Criteria criteria, Class persistentClass) {
         for (Criterion criterion : criterionList)
             criteria.add(criterion);
@@ -97,5 +112,23 @@ public class Finder {
         if (maxResult != 0)
             criteria.setMaxResults(maxResult);
 
+    }
+
+    private void controlRelationAndAddToList(List list, Object expression, String column) {
+        if (column.contains(".")) {
+            String[] tables = column.split("\\.");
+            relationList.add(new Filter(column, tables));
+        }
+        list.add(expression);
+    }
+
+    private String trimColumn(String column) {
+        if (column.contains(".")) {
+            String[] tables = column.split("\\.");
+            if (tables.length > 2)
+                column = tables[tables.length - 2] + "." +
+                        tables[tables.length - 1]; //son ikiyi don
+        }
+        return column;
     }
 }

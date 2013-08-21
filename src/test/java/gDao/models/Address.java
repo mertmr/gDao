@@ -4,10 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: mmeral
- * Date: 5/15/13
- * Time: 10:07 AM
+ * @author Mert Meral
  */
 @Entity
 public class Address implements Serializable{

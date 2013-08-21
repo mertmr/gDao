@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: mmeral
- * Date: 5/15/13
- * Time: 10:12 AM
+ * @author Mert Meral
  */
 @Service
 public class StudentService {

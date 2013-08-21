@@ -3,10 +3,7 @@ package gDao.models;
 import javax.persistence.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: mmeral
- * Date: 5/15/13
- * Time: 10:07 AM
+ * @author Mert Meral
  */
 @Entity
 public class Mobile {
